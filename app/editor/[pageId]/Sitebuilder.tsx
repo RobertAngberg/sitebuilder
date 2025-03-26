@@ -30,7 +30,7 @@ function Sitebuilder() {
             <Section
               key={sectionId}
               sections={sections}
-              setSections={(newSections) => {
+              setSections={(newSections: number[]) => {
                 setSections(newSections);
                 setNextSectionId(nextSectionId + 1);
               }}
@@ -43,7 +43,7 @@ function Sitebuilder() {
         <Footer />
       </div>
 
-      {/* Syns bara på mindre skärmar */}
+      {/* Visible only on smaller screens */}
       <div className="fixed inset-0 flex items-center justify-center bg-slate-950 text-white block lg:hidden">
         <p className="text-center text-xl p-4 md:p-8">
           Beklagar, den här funktionen är endast tillgänglig på större skärmar.
