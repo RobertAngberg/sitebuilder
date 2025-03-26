@@ -1,6 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { Forum } from "next/font/google";
+
+type LinkKey = "home" | "prices" | "contact";
+
+const forum = Forum({ weight: "400", subsets: ["latin"] });
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,9 +19,9 @@ function Navbar() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const longPressTimeout = useRef<NodeJS.Timeout | null>(null); // Ref to track long press
 
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
+  // const closeMenu = () => {
+  //   setIsOpen(false);
+  // };
 
   const handleLongPressStart = (linkKey: LinkKey) => {
     // Start long press timer
@@ -146,7 +151,9 @@ function Navbar() {
   );
 
   return (
-    <div className="sticky top-0 flex items-center justify-end w-full h-20 bg-white md:justify-end md:pl-0">
+    <div
+      className={`${forum.className} sticky top-0 flex items-center justify-end w-full h-20 bg-white md:justify-end md:pl-0`}
+    >
       {/* Mobile */}
       {isOpen && (
         <ul className="text-4xl absolute p-8 pr-12 top-20 right-0 w-full h-screen bg-white text-slate-600 font-bold text-right transition-colors duration-300 space-y-8 tracking-wide leading-tight">
@@ -154,7 +161,7 @@ function Navbar() {
         </ul>
       )}
       {/* Desktop */}
-      <ul className="hidden md:flex md:static md:text-right md:justify-end md:w-auto md:h-auto md:mr-4 md:space-x-6 font-bold transition-colors duration-300 text-slate-600 md:text-xl tracking-wider md:leading-loose px-4">
+      <ul className="hidden md:flex md:static md:text-right md:justify-end md:w-auto md:h-auto md:mr-4 md:space-x-6 font-bold transition-colors duration-300 text-slate-600 md:text-lg tracking-wider md:leading-loose px-4">
         {renderMenuLinks()}
       </ul>
       {/* Hamburger */}

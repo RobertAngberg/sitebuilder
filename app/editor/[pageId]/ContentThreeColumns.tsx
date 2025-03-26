@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 
-const ContentThreeColumns: React.FC<ContentThreeColumnsProps> = ({ handleAddContent }) => {
-  const [columns, setColumns] = useState<{ text: string; isEditing: boolean }[]>([
+interface propsType {
+  handleAddContent: (type: string, arg2?: unknown, arg3?: unknown, columnsData?: string[]) => void;
+}
+
+interface Column {
+  text: string;
+  isEditing: boolean;
+}
+
+function ContentThreeColumns({ handleAddContent }: propsType) {
+  const [columns, setColumns] = useState<Column[]>([
     { text: "", isEditing: false },
     { text: "", isEditing: false },
     { text: "", isEditing: false },
@@ -75,6 +84,6 @@ const ContentThreeColumns: React.FC<ContentThreeColumnsProps> = ({ handleAddCont
       </div>
     </div>
   );
-};
+}
 
 export default ContentThreeColumns;

@@ -1,8 +1,11 @@
 import React, { useState, useRef } from "react";
 import ReactCrop, { Crop, PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import Image from 'next/image'; // Import Next.js Image component
+import Image from "next/image"; // Import Next.js Image component
 import placeholderHero from "./placeholderHero.jpg"; // Static placeholder image
+import { Forum } from "next/font/google";
+
+const forum = Forum({ weight: "400", subsets: ["latin"] });
 
 function HeaderImage() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -28,12 +31,12 @@ function HeaderImage() {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setImageUrl(reader.result as string); 
-        setCroppedImageUrl(null); 
-        setIsSaved(false); 
+        setImageUrl(reader.result as string);
+        setCroppedImageUrl(null);
+        setIsSaved(false);
         setCrop((prevCrop) => ({
           ...prevCrop,
-          width: 0, 
+          width: 0,
         }));
       };
 
@@ -50,7 +53,7 @@ function HeaderImage() {
     const newCrop: Crop = {
       unit: "px",
       width: imageWidth,
-      height: Math.min(450, imageHeight), 
+      height: Math.min(450, imageHeight),
       x: 0,
       y: 0,
     };
@@ -80,7 +83,7 @@ function HeaderImage() {
     const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); 
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(
         imageRef.current,
         completedCrop.x! * scaleX,
@@ -97,7 +100,7 @@ function HeaderImage() {
         (blob) => {
           if (blob) {
             const croppedUrl = URL.createObjectURL(blob);
-            setCroppedImageUrl(croppedUrl); 
+            setCroppedImageUrl(croppedUrl);
             setIsSaved(true);
             setUploadText("Stadens bästa kakor");
           }
@@ -116,8 +119,8 @@ function HeaderImage() {
   };
 
   const handleTextClick = () => {
-    setIsEditing(true); 
-    setUploadText(""); 
+    setIsEditing(true);
+    setUploadText("");
   };
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,7 +150,7 @@ function HeaderImage() {
   };
 
   return (
-    <div className="relative -mx-6">
+    <div className={forum.className}>
       {imageUrl && !croppedImageUrl ? (
         <>
           <div className="text-gray-500 text-center mt-6 pt-4">
@@ -162,7 +165,7 @@ function HeaderImage() {
             style={{ width: "100%", marginTop: "20px" }}
           >
             {/* Dynamically uploaded image uses <img> */}
-            <img
+            <Image
               src={imageUrl}
               alt="Header"
               ref={imageRef}
@@ -199,7 +202,7 @@ function HeaderImage() {
             {/* Show placeholder or cropped image */}
             {croppedImageUrl ? (
               // Cropped image uses <img> because it's dynamically created
-              <img
+              <Image
                 src={croppedImageUrl}
                 alt="Cropped Image"
                 className="w-full h-auto object-cover"
@@ -227,7 +230,7 @@ function HeaderImage() {
                     onKeyDown={handleKeyDown}
                     placeholder=""
                     className="text-white text-5xl font-bold text-center bg-transparent border-none focus:outline-none"
-                    style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 1)", letterSpacing: "0.05em" }} 
+                    style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 1)", letterSpacing: "0.05em" }}
                   />
                   <button
                     className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
